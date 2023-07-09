@@ -7,9 +7,11 @@ import Login from './components/Login'
 import Course from './components/Course'
 import Purchased from './components/Purchased'
 import AllCourses from './components/AllCourses'
+import Header from './components/Header'
 
 function App() {
-  return (
+  return (<>
+  <Header />
     <Router>
       <Routes>
         <Route path='/' element={<Landing />} />
@@ -20,6 +22,7 @@ function App() {
         <Route path='/Courses' element={<AllCourses />} />
       </Routes>
     </Router>
+  </>
   )
 }
 
