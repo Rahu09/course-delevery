@@ -14,11 +14,13 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Courses', 'Purchase', 'Learning'];
+const pages = ['Courses', 'Purchased'];
 const settings = ['Profile', 'Logout'];
 const settings2 = ['signup', 'sign in'];
 
 function ResponsiveAppBar() {
+    
+    const navigate = useNavigate()
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -29,12 +31,20 @@ function ResponsiveAppBar() {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
+    const handleCloseNavMenu = (page) => {
         setAnchorElNav(null);
+        if(page === 'Courses') navigate('/Courses')
+        else if(page === 'Purchased') navigate('/courses/purchased')
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (event, setting) => {
         setAnchorElUser(null);
+        if(setting === 'Logout'){
+            localStorage.removeItem('auth')
+            navigate('/login')
+        } else {
+            navigate('/')
+        }
     };
 
     return (
@@ -85,13 +95,17 @@ function ResponsiveAppBar() {
                                 horizontal: 'left',
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
+                            onClose={(e)=>{
+                                setAnchorElNav(null)
+                            }}
                             sx={{
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <MenuItem key={page} onClick={(e)=>{
+                                    handleCloseNavMenu(page)
+                                }}>
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
@@ -120,7 +134,9 @@ function ResponsiveAppBar() {
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                onClick={()=>{
+                                    handleCloseNavMenu(page)
+                                }}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 {page}
@@ -153,7 +169,9 @@ function ResponsiveAppBar() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                <MenuItem key={setting} onClick={(e)=>{
+                                    handleCloseUserMenu(e,setting)
+                                }}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
@@ -162,7 +180,10 @@ function ResponsiveAppBar() {
                         {settings2.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                onClick={(e) => {
+                                    (page === "signup") ? navigate("/signup") : navigate("/login")
+                                }
+                                }
                                 sx={{ my: 2, color: 'white', display: 'inline-block' }}
                             >
                                 {page}

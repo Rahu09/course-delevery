@@ -1,7 +1,7 @@
 body {
 background-color: rgb(207, 203, 211);
 }
-/* signup page */
+/* signup/signin page */
 .signup--container {
     display: flex;
     justify-content: center;
