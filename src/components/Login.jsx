@@ -12,7 +12,7 @@ function Login() {
       "username": username,
       "password": password
     }
-    axios.post("http://localhost:3000/users/login", {}, {
+    axios.post("/api/users/login", {}, {
       headers: user
     }).then((res) => {
       localStorage.setItem('auth', JSON.stringify(res.data.token));

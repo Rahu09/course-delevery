@@ -13,7 +13,7 @@ function Course() {
   }
   React.useEffect(() => {
     const getCourses = async () => {
-      const res = await axios.get("http://localhost:3000/users/courses", {
+      const res = await axios.get("/api/users/courses", {
         headers: token
       })
       setCourses(res.data.courses)
@@ -23,7 +23,7 @@ function Course() {
   }, [])
 
   const handleClick = () => {
-    axios.post("http://localhost:3000/users/courses/" + param.id,{}, {
+    axios.post("/api/users/courses/" + param.id,{}, {
       headers: token
     }).then((res) => {
       console.log(res);

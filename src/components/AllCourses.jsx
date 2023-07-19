@@ -8,7 +8,7 @@ function AllCourses() {
     Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
   }
   React.useEffect(() => {
-    axios.get("http://localhost:3000/users/courses", {
+    axios.get("/api/users/courses", {
       headers: token
     }).then((res) => {
       console.log(res);
