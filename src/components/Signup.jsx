@@ -1,34 +1,44 @@
 import React from 'react'
 import axios from "axios"
 import { Button, TextField, Card } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 function Signup() {
+  const navigate = useNavigate()
   const [username, setUsername] = React.useState("")
   const [password, setPassword] = React.useState("")
+  const [exist,setExist] = React.useState(<p></p>)
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const body = {
-            username,
-            password
-        }
-        axios.post("/api/users/signup", body)
-            .then((res) => {
-                console.log(res);
-                localStorage.setItem('auth', JSON.stringify(res.data.token));
-            })
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const body = {
+      username,
+      password
     }
-    //changgggge
+    axios.post("/api/users/signup", body)
+      .then((res) => {
+        localStorage.setItem('auth', JSON.stringify(res.data.token));
+        navigate('/')
+      }).catch((e)=>setExist(<p>user already exist</p>))
+  }
 
-    return (
-        <div className='signup--container'>
-            <Card className='signup--container--card'>
-                <TextField onChange={(e) => setUsername(e.target.value)} id="outlined-basic" label="username" variant="outlined" />
-                <TextField onChange={(e) => setPassword(e.target.value)} id="outlined-basic" label="password" variant="outlined" />
-                <Button variant="contained" onClick={handleSubmit}>login</Button>
-            </Card>
-        </div>
-    )
+  return (
+    <div className='signup--container'>
+      <div className='signup-head'>
+        <h1>Welcome To Course Delivery</h1>
+        <h2>Don't have an account yet?. SIGNUP!!</h2>
+      </div>
+
+      <Card className='signup--container--card'>
+        <TextField className='text' onChange={(e) => setUsername(e.target.value)} id="outlined-basic" label="username" variant="outlined" />
+        <TextField className='text' onChange={(e) => setPassword(e.target.value)} id="outlined-basic" label="password" variant="outlined" />
+        <Button variant="contained" onClick={handleSubmit}>Register</Button>
+      </Card>
+      <div >
+        {exist}
+      </div>
+    </div>
+  )
 }
 
 export default Signup

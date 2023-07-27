@@ -8,12 +8,14 @@ import Course from './components/Course'
 import Purchased from './components/Purchased'
 import AllCourses from './components/AllCourses'
 import Header from './components/Header'
+import Nopage from './components/Nopage'
 
 function App() {
   return (<>
     <Router>
       <Header />
       <Routes>
+        <Route path='/nopage' element={<Nopage />} />
         <Route path='/' element={<Landing />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />

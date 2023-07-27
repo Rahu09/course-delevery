@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import Panel from './Panel'
 //Purchased
 function AllCourses() {
   const [courses, setCourses] = React.useState([])
@@ -15,20 +16,11 @@ function AllCourses() {
       setCourses(res.data.courses)
     })
   }, [])
+  let render = courses.length !== 0 ?
+    <div className='panel-container'>{courses.map((ele) => <Panel title={ele} />)}</div> :
+    <div className='panel-container-null'>you need to login to see the content</div>
 
-  return (
-    <div>{courses.map((ele) => <Show title={ele} />)}</div>
-  )
+  return (render)
 }
 
-function Show(props) {
-  const { title, description, price, published } = props.title
-  return <div>
-    <h1>title - {title}</h1>
-    <p>description - {description}</p>
-    <p>price - {price}</p>
-    <p>published - {published}</p>
-  </div>
-}
-// export {courses}
 export default AllCourses
