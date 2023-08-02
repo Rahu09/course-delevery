@@ -2,11 +2,15 @@ import React from 'react'
 import axios from "axios"
 import { Button, TextField, Card } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { useSetRecoilState } from "recoil";
+import { userState } from "../store/atoms/users";
 
 function Signup() {
   const navigate = useNavigate()
   const [username, setUsername] = React.useState("")
   const [password, setPassword] = React.useState("")
+  const setUser = useSetRecoilState(userState)
+
   const [exist,setExist] = React.useState(<p></p>)
 
   const handleSubmit = (e) => {
@@ -18,6 +22,10 @@ function Signup() {
     axios.post("/api/users/signup", body)
       .then((res) => {
         localStorage.setItem('auth', JSON.stringify(res.data.token));
+        setUser({
+          isLoading:false,
+          userLogin:true
+        })
         navigate('/')
       }).catch((e)=>setExist(<p>user already exist</p>))
   }

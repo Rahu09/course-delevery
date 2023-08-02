@@ -28,12 +28,13 @@ color: white;
 
 /* navbar */
 .navbar-container {
+    z-index: 1;
     color: #71678c;
     padding: 5px 10%;
     width: 79.8vw;
     position: fixed;
-    background: rgba(20, 20, 21, 0.5);
-    backdrop-filter: blur(8px);
+    background: rgba(20, 20, 21, 0.8);
+    backdrop-filter: blur(4px);
     /* border: 2px solid rgb(226, 226, 9); */
 }
 .navbar{
@@ -73,7 +74,8 @@ color: white;
     font-size: 90px;
 }
 
-.landing-intro div div{
+.chip-container div{
+    margin: 10px;
     font-size: 20px;
     width: 150px;
     height: 50px;
@@ -86,6 +88,17 @@ color: white;
     width: 500px;
     display: flex;
     justify-content: space-evenly;
+}
+.about-us{
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+}
+.about-us div {
+    margin:10px;
 }
 
 /* panel */
