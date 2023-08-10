@@ -17,7 +17,7 @@ function AllCourses() {
     })
   }, [])
   let render = courses.length !== 0 ?
-    <div className='panel-container'>{courses.map((ele) => <Panel title={ele} />)}</div> :
+    <div className='panel-container'>{courses.map((ele) => <Panel key={ele._id} title={ele} />)}</div> :
     <div className='panel-container-null'>you need to login to see the content</div>
 
   return (render)

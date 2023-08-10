@@ -4,6 +4,7 @@ import { Button, TextField, Card } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useSetRecoilState } from "recoil";
 import { userState } from "../store/atoms/users";
+import { Link } from 'react-router-dom';
 
 function Signup() {
   const navigate = useNavigate()
@@ -27,11 +28,11 @@ function Signup() {
           userLogin:true
         })
         navigate('/')
-      }).catch((e)=>setExist(<p>user already exist</p>))
+      }).catch(()=>setExist(<p>user already exist</p>))
   }
 
   return (
-    <div className='signup--container'>
+    <div className='signup--container gradient'>
       <div className='signup-head'>
         <h1>Welcome To Course Delivery</h1>
         <h2>Don't have an account yet?. SIGNUP!!</h2>
@@ -45,6 +46,7 @@ function Signup() {
       <div >
         {exist}
       </div>
+      <div>Already have an acount? <Link to="/Login">Login</Link></div>
     </div>
   )
 }
