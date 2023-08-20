@@ -9,18 +9,18 @@ function AllCourses() {
     Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
   }
   React.useEffect(() => {
-    axios.get("/api/users/courses", {
-      headers: token
-    }).then((res) => {
-      console.log(res);
-      setCourses(res.data.courses)
-    })
+    const getallcourses = async()=>{
+      await axios.get("/api/admin/courses", {
+        headers: token
+      }).then((res) => {
+        console.log(res);
+        setCourses(res.data.courses)
+      })
+    }
+    getallcourses()
+    
   }, [])
-  let render = courses.length !== 0 ?
-    <div className='panel-container'>{courses.map((ele) => <Panel key={ele._id} title={ele} />)}</div> :
-    <div className='panel-container-null'>you need to login to see the content</div>
-
-  return (render)
+  return (<div className='panel-container'>{courses.map((ele) => <Panel key={ele._id} title={ele} />)}</div>)
 }
 
 export default AllCourses

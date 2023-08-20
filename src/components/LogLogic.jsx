@@ -7,7 +7,7 @@ function LogLogic() {
 
   const setUser = useSetRecoilState(userState);
   const auth = async()=>{
-    const res = await localStorage.getItem("token")
+    const res = await localStorage.getItem("auth")
     if(res){
       setUser({
         isLoading: false,

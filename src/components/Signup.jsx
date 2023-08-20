@@ -12,7 +12,7 @@ function Signup() {
   const [password, setPassword] = React.useState("")
   const setUser = useSetRecoilState(userState)
 
-  const [exist,setExist] = React.useState(<p></p>)
+  const [exist, setExist] = React.useState(<p></p>)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,15 +20,15 @@ function Signup() {
       username,
       password
     }
-    axios.post("/api/users/signup", body)
+    axios.post("/api/admin/signup", body)
       .then((res) => {
         localStorage.setItem('auth', JSON.stringify(res.data.token));
         setUser({
-          isLoading:false,
-          userLogin:true
+          isLoading: false,
+          userLogin: true
         })
         navigate('/')
-      }).catch(()=>setExist(<p>user already exist</p>))
+      }).catch(() => setExist(<p>user already exist</p>))
   }
 
   return (
@@ -40,7 +40,9 @@ function Signup() {
 
       <Card className='signup--container--card'>
         <TextField className='text' onChange={(e) => setUsername(e.target.value)} id="outlined-basic" label="username" variant="outlined" />
-        <TextField className='text' onChange={(e) => setPassword(e.target.value)} id="outlined-basic" label="password" variant="outlined" />
+
+        <TextField className='text' onChange={(e) => setPassword(e.target.value)} id="outlined-basic" label="password" type={"password"} variant="outlined" />
+        
         <Button variant="contained" onClick={handleSubmit}>Register</Button>
       </Card>
       <div >

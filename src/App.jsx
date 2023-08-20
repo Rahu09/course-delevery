@@ -9,6 +9,7 @@ import AllCourses from './components/AllCourses'
 import Header from './components/Header'
 import Nopage from './components/Nopage'
 import LogLogic from './components/LogLogic'
+import AddCourse from './components/AddCourse'
 import { RecoilRoot } from 'recoil'
 
 function App() {
@@ -18,11 +19,12 @@ function App() {
         <LogLogic />
         <Header />
         <Routes>
+          <Route path={"/addcourse"} element={<AddCourse />} />
           <Route path='/nopage' element={<Nopage />} />
           <Route path='/' element={<Landing />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/courses/:id' element={<Course />} />
+          <Route path='/course/:id' element={<Course />} />
           <Route path='/courses/purchased' element={<Purchased />} />
           <Route path='/Courses' element={<AllCourses />} />
         </Routes>

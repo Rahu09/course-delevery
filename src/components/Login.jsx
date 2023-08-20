@@ -18,10 +18,10 @@ function Login() {
       "username": username,
       "password": password
     }
-    axios.post("/api/users/login", {}, {
+    axios.post("/api/admin/login", {}, {
       headers: user
     }).then((res) => {
-      localStorage.setItem('auth', JSON.stringify(res.data.token));
+      localStorage.setItem('auth',JSON.stringify(res.data.token));
       setUser({
         isLoading: false,
         userLogin: true
@@ -39,7 +39,7 @@ function Login() {
 
       <Card className='signup--container--card'>
         <TextField className='text' onChange={(e) => setUsername(e.target.value)} id="outlined-basic" label="username" variant="outlined" />
-        <TextField className='text' onChange={(e) => setPassword(e.target.value)} id="outlined-basic" label="password" variant="outlined" />
+        <TextField className='text' onChange={(e) => setPassword(e.target.value)} id="outlined-basic" label="password" type={"password"} variant="outlined" />
         <Button  variant="contained" onClick={handleSubmit}>login</Button>
       </Card>
       <br />

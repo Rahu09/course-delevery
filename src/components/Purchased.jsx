@@ -8,7 +8,7 @@ function Purchased() {
     Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
   }
   React.useEffect(() => {
-    axios.get("/api/users/purchasedCourses", {
+    axios.get("/api/admin/purchasedCourses", {
       headers: token
     }).then((res) => {
       console.log(res);
