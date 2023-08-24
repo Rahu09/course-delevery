@@ -13,7 +13,7 @@ function AllCourses() {
       await axios.get("/api/admin/courses", {
         headers: token
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         setCourses(res.data.courses)
       })
     }

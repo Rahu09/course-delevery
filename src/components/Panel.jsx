@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function Panel(Props) {
   const { title, description, price, published, _id } = Props.title
   return (
-    <Link to={`/course/${_id}`} style={{color:"white"}}>
+    <Link to={`/updatecourse/${_id}`} style={{color:"white"}}>
       <div className="card">
 
         <img
