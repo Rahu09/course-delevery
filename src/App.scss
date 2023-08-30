@@ -30,15 +30,15 @@ body {
 }
 
 /* navbar */
-.navbar-container {
-	z-index: 10;
-	color: #71678c;
-	padding: 5px 10%;
-	width: 79.8vw;
-	position: fixed;
-	background: rgba(2, 1, 4, 0.8);
-	backdrop-filter: blur(8px);
-}
+// .navbar-container {
+// 	z-index: 10;
+// 	color: #71678c;
+// 	padding: 5px 10%;
+// 	width: 79.8vw;
+// 	position: fixed;
+// 	background: rgba(2, 1, 4, 0.8);
+// 	backdrop-filter: blur(8px);
+// }
 
 .navbar {
 	width: 100%;
@@ -62,10 +62,15 @@ body {
 .video-responsive {
 	overflow: hidden;
 	padding-bottom: 56.25%;
+	margin-bottom: 30px;
+	border: 3px solid rgb(87, 66, 105);
+	border-radius: 20px;
 	position: relative;
-	height: 0;
+	height: 0px;
+	width: 100%;
 
 	iframe {
+		border: none;
 		left: 0;
 		top: 0;
 		height: 100%;
@@ -77,17 +82,49 @@ body {
 
 /* LOGIN */
 .signup--container {
-	padding-top: 150px;
+	padding-top: 130px;
 	color: #71678c;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 85vh;
+	min-height: 85vh;
 
 	/* border: 2px solid rgb(135, 24, 24); */
 	.signup--container--card {
+		background-image: linear-gradient(to right, #766c89, #2e2c49);
+		display: flex;
+		flex-direction: column;
+		margin-top: 200px;
+		padding: 60px 0px;
+		align-items: center;
+		width: 40%;
+		max-width: 500px;
+		min-width: 300px;
+
+		div {
+			margin-bottom: 10px;
+		}
+
+		button {
+			width: 100px;
+			background-color: #000000;
+		}
+
+		button:hover {
+			background-color: #71678c;
+		}
+
 		margin: 0px;
+
+		.login--radio {
+			color: rgb(25, 1, 31);
+			padding: 20px;
+
+			.PrivateSwitchBase-input {
+				color: #000000;
+			}
+		}
 	}
 
 	.signup-head {
@@ -109,32 +146,6 @@ body {
 	}
 }
 
-.signup--container--card {
-	/* border: 2px solid rgb(135, 24, 24); */
-	background-image: linear-gradient(to right, #766c89, #2e2c49);
-	display: flex;
-	flex-direction: column;
-	margin-top: 210px;
-	padding: 60px 0px;
-	align-items: center;
-	width: 40%;
-	max-width: 500px;
-	min-width: 300px;
-
-	div {
-		margin-bottom: 10px;
-	}
-
-	button {
-		width: 100px;
-		background-color: #000000;
-	}
-
-	button:hover {
-		background-color: #71678c;
-	}
-}
-
 .TextField {
 	padding: 5px;
 }
@@ -148,6 +159,8 @@ body {
 /* panel */
 
 .panel-container {
+	background-image: linear-gradient(to bottom right, rgb(0, 0, 1), rgb(0, 0, 0), #0a0114, #1c0830);
+	min-height: 100vh;
 	padding-top: 200px;
 	display: flex;
 	flex-wrap: wrap;
@@ -156,15 +169,22 @@ body {
 	overflow-x: auto;
 }
 
-.panel-container-null {
-	padding: 100px 8%;
-	padding-left: 10%;
-	height: 4vw;
-	font-size: 100px;
-}
+// .panel-container-null {
+// 	padding: 100px 8%;
+// 	padding-left: 10%;
+// 	height: 4vw;
+// 	font-size: 100px;
+// }
 
 .card {
 	// border: 2px solid red;
+
+	border: 1px solid rgb(87, 66, 105);
+	border-radius: 14px;
+	max-height: 500px;
+	// text-decoration: none;
+
+	padding: 2px;
 	width: 25vw;
 	min-width: 250px;
 	font-size: 22px;
@@ -174,48 +194,187 @@ body {
 	flex-direction: column;
 	/* ADD */
 	position: relative;
+
+	#panal--button {
+		// padding-right: 10px;
+		padding-bottom: 25px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+	}
+
+	.bold {
+		font-weight: bold;
+	}
+
+	.gray {
+		color: #918E9B;
+	}
+
+	.card--image {
+		width: 100%;
+		border-radius: 14px;
+		margin-bottom: 9px;
+	}
+
+	/* ADD */
+	.card--title {
+		padding: 0px 10px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.card--stats {
+		padding: 0px 10px;
+		display: flex;
+		align-items: center;
+	}
+
+	.card--star {
+		height: 14px;
+	}
+
+	/* ADD */
+	.card--price {
+		padding: 0px 10px;
+		margin-top: auto;
+	}
 }
 
-.bold {
-	font-weight: bold;
-}
-
-.gray {
-	color: #918E9B;
-}
-
-.card--image {
-	width: 100%;
-	border-radius: 14px;
-	margin-bottom: 9px;
-}
-
-/* ADD */
-.card--title {
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.card--stats {
-	display: flex;
-	align-items: center;
-}
-
-.card--star {
-	height: 14px;
-}
-
-/* ADD */
-.card--price {
-	margin-top: auto;
-}
 
 // update course
+
 .update--content {
+	margin: 30px;
+	background: linear-gradient(to right, #766c89, #2e2c49);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	// width: 30vw;
+	max-width: 50vw;
+	min-width: 300px;
+	border-radius: 5px;
+	flex-direction: column;
+	padding: 15px;
+	padding-top: 15px;
+
+	.txt {
+		width: 30vw;
+	}
+}
+
+.uc--course--card {
+
+	// border: 10px solid rgb(186, 15, 15);
+	div {
+		// border: 10px solid rgb(186, 15, 15);
+		padding: 0px;
+		margin: 0px;
+	}
+}
+
+#update--container>div {
+	display: flex;
+	justify-content: center;
+	// align-items: center;
+}
+
+//coursePage
+.coursepage--container {
+	padding-top: 10vh;
+	padding-bottom: 30px;
+	background-image: linear-gradient(to bottom right, rgb(0, 0, 1), rgb(0, 0, 0), #0a0114, #1c0830);
 	display: flex;
 	flex-direction: column;
-	padding: 60px;
-	padding-top: 15px;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+
+	#cp--title {
+		font-size: 90px;
+		font-weight: 500;
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-align: center;
+	}
+
+	#cp--image {
+		display: flex;
+		justify-content: center;
+		max-width: 50vw;
+		min-width: 360px;
+		border: 2px solid rgb(87, 66, 105);
+		border-radius: 20px;
+		margin-bottom: 5vh;
+
+		img {
+			border-radius: 20px;
+			overflow: hidden;
+		}
+	}
+
+	#cp--Description {
+		margin: 20px;
+		background: rgba(255, 253, 253, 0.088);
+		border: 1px solid rgb(87, 66, 105);
+		border-radius: 5px;
+		width: 40vw;
+		min-width: 350px;
+		padding: 10px;
+		font-size: 20px;
+		text-align: center;
+	}
+
+	#cp--button {
+		background-color: #783eab5c;
+		height: 90px;
+		min-width: 200px;
+		font-size: 25px;
+		font-weight: 700;
+		border-radius: 5PX;
+		margin: 20PX;
+	}
+
+	#cp--chapters--container {
+		background: rgba(255, 253, 253, 0.088);
+		border: 1px solid rgb(87, 66, 105);
+		border-radius: 10px;
+		width: 40vw;
+		min-width: 360px;
+		// padding: 10px;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		#cp--chapter {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			border-bottom: 1px solid rgb(87, 66, 105);
+			border-radius: 10px;
+
+			#cp--chapter--ind {
+				font-size: 80px;
+				width: 15%;
+				padding-left: 20px;
+			}
+
+			#cp--chapter--details {
+				#cp--chapter--title {
+					font-size: 25px;
+				}
+
+				#cp--chapter--des {
+					color: gray;
+				}
+
+				p {
+					margin: 5px;
+				}
+			}
+		}
+	}
 }
 
 //course
@@ -242,6 +401,9 @@ body {
 
 		h1 {
 			margin: 0px;
+			text-align: center;
+			font-size: 30px;
+			overflow: hidden;
 		}
 
 		button {
@@ -257,6 +419,7 @@ body {
 		display: flex;
 		flex-direction: row;
 		width: 100vw;
+
 		.chapter--index {
 			position: sticky;
 			top: 130px;
@@ -266,6 +429,7 @@ body {
 			// border: 2px solid red;
 			height: 84vh;
 			width: 5vw;
+			min-width: 35px;
 			overflow-y: auto;
 
 			.nav--button {
@@ -293,13 +457,15 @@ body {
 				margin-left: 5px;
 				margin-right: 5px;
 				width: 45vw;
-				min-width: 650px;
+				min-width: 325px;
+
 				div {
 					width: 100%;
 					border: 5px solid rgb(87, 66, 105);
 					border-radius: 10px;
 				}
 			}
+
 			.text--container {
 				border: 1px solid rgb(87, 66, 105);
 				border-top: none;
@@ -307,8 +473,8 @@ body {
 				border-radius: 10px;
 				width: 47vw;
 				height: 81vh;
-				// margin: 20px;
-				min-width: 650px;
+				// margin-bottom: 20px;
+				min-width: 320px;
 				overflow-y: scroll;
 			}
 		}
@@ -317,6 +483,16 @@ body {
 }
 
 @media only screen and (min-device-width : 1130px) {
+
+	.navbar-container {
+		z-index: 10;
+		color: #71678c;
+		padding: 5px 10%;
+		width: 79.8vw;
+		position: fixed;
+		background: rgba(2, 1, 4, 0.8);
+		backdrop-filter: blur(8px);
+	}
 
 	/* landing */
 	.landing-intro {
@@ -401,6 +577,16 @@ body {
 }
 
 @media only screen and (max-device-width : 1130px) and (min-device-width : 850px) {
+
+	.navbar-container {
+		z-index: 10;
+		color: #71678c;
+		padding: 5px 10%;
+		width: 79.8vw;
+		position: fixed;
+		background: rgba(2, 1, 4, 0.8);
+		backdrop-filter: blur(8px);
+	}
 
 	/* landing */
 	.landing-intro {
@@ -491,6 +677,21 @@ body {
 }
 
 @media only screen and (max-device-width : 850px) and (min-device-width : 375px) {
+
+	.navbar-container {
+		z-index: 10;
+		color: #71678c;
+		padding: 5px 0px;
+		padding-left: 3%;
+		padding-right: 17%;
+		width: 79.8vw;
+		position: fixed;
+		background: rgba(2, 1, 4, 0.8);
+		backdrop-filter: blur(8px);
+		.navright{
+			max-width: 200px;
+		}
+	}
 
 	/* landing */
 	.landing-intro {

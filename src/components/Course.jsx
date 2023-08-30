@@ -4,23 +4,30 @@ import { useParams } from 'react-router-dom';
 import YoutubeEmbed from "./YoutubeEmbed"
 import parse from 'html-react-parser';
 
+// import {userState} from "../store/atoms/users"
+// import { useRecoilValue } from 'recoil'
+
 function Course() {
   let { id } = useParams();
   const [ind, setInd] = useState(0)
   const [content, setContent] = useState([]);
   const [show, setShow] = useState({
-    html: "<h1>first chapter... \[-]/</h1><p>if lyu.</p>",
-    videoLink: "apGV9Kg7ics",
-    _id: "64e634b425d2f669a6c667b8"
+    name:"",
+    description:"",
+    html: "",
+    videoLink: "",
+    _id: ""
   })
-
+  
+  // const admin = useRecoilValue(userState)
+  const baseUrl = localStorage.getItem("account")
 
   const token = {
     Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
   }
   useEffect(()=>{
     const allChapters = async()=>{
-      const res = await axios.get(`/api/admin/course/${id}/content`,{
+      const res = await axios.get(`${baseUrl}/course/${id}/content`,{
         headers:token
       })
       setContent(res.data.chapters)
@@ -28,6 +35,13 @@ function Course() {
     allChapters()
   },[])
 
+  useEffect(()=>{
+    console.log('curr');
+    setShow(content[0])
+    setInd(0)
+  },[content])
+
+  console.log(show);
   const handleprev = () => {
     if (ind !== 0) {
       console.log('prev');
@@ -53,7 +67,7 @@ function Course() {
     <div className='course'>
       <div className='course--nav'>
         <button onClick={handleprev}>prev</button>
-        <h1>COURSE CONTENT</h1>
+        <h1>{show ? show.name : ""}</h1>
         <button onClick={handlenext}>next</button>
       </div>
       <div className='course--body'>

@@ -18,31 +18,38 @@ function ResponsiveAppBar() {
 	const [width, setWidth] = React.useState(window.innerWidth);
 
 	React.useEffect(() => {
-		window.addEventListener("resize", ()=>setWidth(window.innerWidth));
-		return () => window.removeEventListener("resize", ()=>setWidth(window.innerWidth));
+		window.addEventListener("resize", () => setWidth(window.innerWidth));
+		return () => window.removeEventListener("resize", () => setWidth(window.innerWidth));
 	});
-	
+
 	const navigate = useNavigate()
-	const {userLogin} = useRecoilValue(userState)
+	const { userLogin } = useRecoilValue(userState)
 	const setUser = useSetRecoilState(userState);
+	const baseUrl = localStorage.getItem("account")
 
 	function logout() {
 		localStorage.removeItem("auth")
+		localStorage.removeItem("account")
 		setUser({
 			isLoading: false,
 			userLogin: false
 		})
 		navigate('/')
-		setTimeout(()=>alert("you have been logged out"),1000)
+		setTimeout(() => alert("you have been logged out"), 1000)
 	}
 
 	let show = <></>
-	if(width>850){
+	if (width > 850) {
 		show = <div className='at--large'>
-		<Button size="large" onClick={() => navigate('/Courses')}>All Courses</Button>
-		<Button size="large" onClick={() => navigate('/addcourse')}>Add Course</Button>
-		<Button size="large" onClick={logout}>Logout</Button>
-	</div>
+			<Button size="large" onClick={() => navigate('/Courses')}>All Courses</Button>
+			{
+				baseUrl === "/api/admin" ? 
+				<Button size="large" onClick={() => navigate('/addcourse')}>Add Course</Button> :
+				<Button size="large" onClick={() => navigate('/courses/purchased')}>PURCHASED</Button>
+			}
+			
+			<Button size="large" onClick={logout}>Logout</Button>
+		</div>
 	} else {
 		const handleOpenNavMenu = (event) => {
 			setAnchorElNav(event.currentTarget);
@@ -52,53 +59,62 @@ function ResponsiveAppBar() {
 			setAnchorElNav(null);
 		};
 		show = <div className='at--small'>
-		<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-			<IconButton
-				size="large"
-				aria-label="account of current user"
-				aria-controls="menu-appbar"
-				aria-haspopup="false"
-				onClick={handleOpenNavMenu}
-				color="inherit"
-			>
-				<MenuIcon />
-			</IconButton>
-			<Menu
-				id="menu-appbar"
-				anchorEl={anchorElNav}
-				anchorOrigin={{
-					vertical: "bottom",
-					horizontal: "right"
-				}}
-				keepMounted
-				transformOrigin={{
-					vertical: "top",
-					horizontal: "right"
-				}}
-				open={Boolean(anchorElNav)}
-				onClose={() => handleCloseNavMenu("hi")}
-				sx={{
-					display: { xs: "block" }
-				}}
-			>
-				<MenuItem onClick={() => navigate('/Courses')}>
-					<Typography textAlign="center">Courses</Typography>
-				</MenuItem>
-				<MenuItem onClick={() => navigate('/addcourse')}>
-					<Typography textAlign="center">Add course</Typography>
-				</MenuItem>
-				<MenuItem onClick={() => navigate('/Nopage')}>
-					<Typography textAlign="center">Events</Typography>
-				</MenuItem>
-				<MenuItem onClick={() => navigate('/Nopage')}>
-					<Typography textAlign="center">Newsroom</Typography>
-				</MenuItem>
-				<MenuItem onClick={logout}>
-					<Typography textAlign="center">Logout</Typography>
-				</MenuItem>
-			</Menu>
-		</Box>
-	</div>
+			<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+				<IconButton
+					size="large"
+					aria-label="account of current user"
+					aria-controls="menu-appbar"
+					aria-haspopup="false"
+					onClick={handleOpenNavMenu}
+					color="inherit"
+				>
+					<MenuIcon />
+				</IconButton>
+				<Menu
+					id="menu-appbar"
+					anchorEl={anchorElNav}
+					anchorOrigin={{
+						vertical: "bottom",
+						horizontal: "right"
+					}}
+					keepMounted
+					transformOrigin={{
+						vertical: "top",
+						horizontal: "right"
+					}}
+					open={Boolean(anchorElNav)}
+					onClose={() => handleCloseNavMenu("hi")}
+					sx={{
+						display: { xs: "block" }
+					}}
+				>
+					<MenuItem onClick={() => {
+						setAnchorElNav(null);
+						navigate('/Courses')
+					}}>
+						<Typography textAlign="center">Courses</Typography>
+					</MenuItem>
+					{baseUrl === "/api/admin" ?
+						(<MenuItem onClick={() => {
+							navigate('/addcourse')
+							setAnchorElNav(null);
+						}}>
+							<Typography textAlign="center">Add course</Typography>
+						</MenuItem>)
+						:
+						(<MenuItem onClick={() => {
+							navigate('/courses/purchased')
+							setAnchorElNav(null);
+						}}>
+							<Typography textAlign="center">purchased</Typography>
+						</MenuItem>)
+					}
+					<MenuItem onClick={logout}>
+						<Typography textAlign="center">Logout</Typography>
+					</MenuItem>
+				</Menu>
+			</Box>
+		</div>
 	}
 
 	return (

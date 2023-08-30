@@ -1,13 +1,10 @@
 // import React from "react";
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 
 function Landing() {
-
-	const handleClick = ()=>{
-		console.log('clicked');
-	}
+	const navigate = useNavigate()
 
 	return <div>
 		<div className="landing-intro">
@@ -19,9 +16,8 @@ function Landing() {
 			<p>This is a community which provides free hands-on training in various fields of computer science</p>
 			<p>and have an inclusive community focusing on a learn by doing approach.</p>
 			<div className="chip-container">
-				<Chip className="chips" label="Clickable" onClick={handleClick} />
-				<Chip className="chips" label="Clickable" onClick={handleClick} />
-				<Chip className="chips" label="Clickable" onClick={handleClick} />
+				<Chip className="chips" label="All Courses" onClick={() => navigate('/Courses')} />
+				<Chip className="chips" label="Add Courses" onClick={() => navigate('/addcourse')} />
 			</div>
 		</div>
 
@@ -40,9 +36,8 @@ function Landing() {
 					<li>Get expert guidance with career, Open Source, and internships, jobs around the world.</li>
 					<li>We are also having various events weekly or monthly. Do participate in those events to make your skills enhance.</li>
 					<div className="chip-container">
-						<Chip className="chips" label="Clickable" onClick={handleClick} />
-						<Chip className="chips" label="Clickable" onClick={handleClick} />
-						<Chip className="chips" label="Clickable" onClick={handleClick} />
+						{/* <Chip className="chips" label="Clickable" onClick={handleClick} />
+						<Chip className="chips" label="Clickable" onClick={handleClick} /> */}
 					</div>
 				</ul>
 			</div>

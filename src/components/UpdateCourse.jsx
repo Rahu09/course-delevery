@@ -10,6 +10,8 @@ import { courseTitle, coursePrice, isCourseLoading, courseImage } from "../store
 
 import YoutubeEmbed from "./YoutubeEmbed";
 import { Editor } from '@tinymce/tinymce-react';
+ 
+// import {userState} from "../store/atoms/users"
 
 function UpdateCourse() {
   let { id } = useParams();
@@ -20,11 +22,16 @@ function UpdateCourse() {
   const [addVideo, setAddVideo] = useState(false)
   const [text, setText] = useState("nil")
   const [link, setLink] = useState("nil")
+  const [name, setName] = useState("nil")
+  const [description, setDescription] = useState("nil")
+  
+  // const admin = useRecoilValue(userState)
+  const baseUrl = localStorage.getItem("account")
 
+  if(baseUrl!=="/api/admin") return <div className="signup--container gradient" ><p> you are not authorized</p></div>
 
   useEffect(() => {
-
-    axios.get(`/api/admin/course/${id}`, {
+    axios.get(`${baseUrl}/course/${id}`, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
@@ -49,8 +56,12 @@ function UpdateCourse() {
     const newtext = text.split(search).join(replaceWith);
     console.log(newtext);
     console.log(link);
+    console.log(name);
+    console.log(description);
     try {
-      const res = await axios.put(`/api/admin/course/${id}/content`, {
+      const res = await axios.put(`${baseUrl}/course/${id}/content`, {
+        name: name,
+        description: description,
         html: newtext,
         videoLink: link
       }, {
@@ -65,13 +76,13 @@ function UpdateCourse() {
     catch (e) {
       console.log("request to backend terminated", e);
     }
-
+    handleShowCreate();
 
   }
 
-  return <div  >
+  return <div id="update--container" className="gradient">
     <GrayTopper />
-    <Grid container className="gradient" style={{ minHeight: "100vh" }}>
+    <Grid container style={{ minHeight: "100vh" }}>
       <Grid item lg={8} md={12} sm={12}>
         <UpdateCard />
       </Grid>
@@ -79,27 +90,79 @@ function UpdateCourse() {
         <CourseCard />
       </Grid>
       <Grid item lg={12} md={12} sm={12} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <Button size="large" variant="outlined" style={{ color: "#c8b6fd", borderColor: "#c8b6fd" }} onClick={handleShowCreate}>Add New Chapters</Button>
+        <Button size="large" variant="outlined" style={{ color: "#c8b6fd", borderColor: "#c8b6fd" }} onClick={handleShowCreate}>
+          Add New Chapters
+        </Button>
       </Grid>
     </Grid>
-    {showCreate &&
-      <div className="update--content">
-        <Button onClick={handleAddText}>add text</Button>
-        {addText &&
-          <Textarea setText={setText} />
-        }
-        <Button onClick={handleAddVideo}>add video</Button>
-        {addVideo &&
-          <input type="text" onChange={(e) => setLink(e.target.value)} />
-        }
-        {link !== "nil" &&
-          <YoutubeEmbed embedId={link} />
-        }
-        {(addText || addVideo) &&
-          <Button onClick={handleContent}>submit</Button>
-        }
-      </div>
-    }
+    <div>
+      {showCreate &&
+        <div className="update--content">
+          <TextField
+            className="txt"
+            style={{ marginBottom: 10, minWidth:"300px" }}
+            onChange={(e) => {
+              setName(e.target.value)
+            }}
+            fullWidth={true}
+            label="Name"
+            variant="outlined"
+          />
+          <TextField
+            className="txt"
+            style={{ marginBottom: 10, minWidth:"300px" }}
+            onChange={(e) => {
+              setDescription(e.target.value)
+            }}
+            fullWidth={true}
+            label="Description"
+            variant="outlined"
+          />
+          <Button
+            size={"large"}
+            variant="contained"
+            style={{ width: "40%", background: "black", margin: 10 }}
+            onClick={handleAddText}>
+            add text
+          </Button>
+          {addText &&
+            <Textarea setText={setText} />
+          }
+          <Button
+            size={"large"}
+            variant="contained"
+            style={{ width: "40%", background: "black", margin: 10 }}
+            onClick={handleAddVideo}>
+            add video
+          </Button>
+          {addVideo &&
+            <TextField
+              style={{ marginBottom: 10, width: "30vw", minWidth:"300px" }}
+              onChange={(e) => {
+                let link = e.target.value.split('?')[1].split('&')[0].split('=')[1]
+                setLink(link)
+              }}
+              fullWidth={true}
+              label="youtube link"
+              variant="outlined"
+            />
+            // <input type="text" onChange={(e) => setLink(e.target.value)} />
+          }
+          {link !== "nil" &&
+            <YoutubeEmbed embedId={link} />
+          }
+          {(addText || addVideo) &&
+            <Button
+              size={"large"}
+              variant="contained"
+              style={{ width: "40%", background: "black", margin: 10 }}
+              onClick={handleContent}>
+              submit
+            </Button>
+          }
+        </div>
+      }
+    </div>
   </div>
 }
 
@@ -259,7 +322,7 @@ function UpdateCard() {
           variant="contained"
           style={{ background: "black" }}
           onClick={async () => {
-            axios.put(`/api/admin/courses/` + courseDetails.course._id, {
+            axios.put(`${baseUrl}/courses/` + courseDetails.course._id, {
               title: title,
               description: description,
               imageLink: image,
@@ -292,12 +355,12 @@ function CourseCard(props) {
   const title = useRecoilValue(courseTitle);
   const imageLink = useRecoilValue(courseImage);
 
-  return <div style={{ display: "flex", marginTop: "23vh", justifyContent: "center", width: "100%" }} >
+  return <div className="uc--course--card" style={{ display: "flex", marginTop: "23vh", justifyContent: "center", width: "100%" }} >
     <Card style={{
       width: 350,
       minHeight: 200,
       borderRadius: 20,
-      marginRight: 50,
+      // marginRight: 50,
       paddingBottom: 15,
       zIndex: 2
     }} className="course--card">

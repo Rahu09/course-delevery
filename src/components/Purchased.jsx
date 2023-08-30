@@ -1,34 +1,33 @@
 import React from 'react'
 import axios from 'axios'
-
-function Purchased() {
+import Panel from './Panel'
+// import {userState} from "../store/atoms/users"
+// import { useRecoilValue } from 'recoil'
+//Purchased
+function AllCourses() {
+  // const admin = useRecoilValue(userState)
+  let baseUrl = ""
+  baseUrl = localStorage.getItem("account")
+  // console.log("hi"+admin.baseUrl);
+  // const BASE
+  console.log(baseUrl);
   const [courses, setCourses] = React.useState([])
 
   const token = {
     Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
   }
   React.useEffect(() => {
-    axios.get("/api/admin/purchasedCourses", {
-      headers: token
-    }).then((res) => {
-      console.log(res);
-      setCourses(res.data.purchasedCourses)
-    })
+    const getallcourses = async()=>{
+      await axios.get(`${baseUrl}/purchasedCourses`, {
+        headers: token
+      }).then((res) => {
+        setCourses(res.data.purchasedCourses)
+      })
+    }
+    getallcourses()
+    
   }, [])
-
-  return (
-    <div>{courses.map((ele) => <Show title={ele} />)}</div>
-  )
+  return (<div className='panel-container'>{courses.map((ele) => <Panel key={ele._id} title={ele} />)}</div>)
 }
 
-function Show(props) {
-  const { title, description, price, published } = props.title
-  return <div>
-    <h1>title - {title}</h1>
-    <p>description - {description}</p>
-    <p>price - {price}</p>
-    <p>published - {published}</p>
-  </div>
-}
-
-export default Purchased
+export default AllCourses

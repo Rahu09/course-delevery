@@ -10,6 +10,7 @@ import Header from './components/Header'
 import Nopage from './components/Nopage'
 import LogLogic from './components/LogLogic'
 import AddCourse from './components/AddCourse'
+import CoursePage from './components/CoursePage'
 import Course from './components/Course'
 import { RecoilRoot } from 'recoil'
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/updatecourse/:id' element={<UpdateCourse />} />
           <Route path='/courses/purchased' element={<Purchased />} />
           <Route path='/Courses' element={<AllCourses />} />
+          <Route path='/CoursePage/:id' element={<CoursePage/>} />
           <Route path='/course/:id' element={<Course />}/>
         </Routes>
       </Router>

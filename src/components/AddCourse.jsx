@@ -7,6 +7,10 @@ import React, { useState, useRef } from "react"
 import YoutubeEmbed from "./YoutubeEmbed";
 import { Editor } from '@tinymce/tinymce-react';
 
+
+// import {userState} from "../store/atoms/users"
+// import { useRecoilValue } from 'recoil'
+
 function AddCourse() {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -14,6 +18,11 @@ function AddCourse() {
 	const [price, setPrice] = useState(0)
 	const [chapter, setChapter] = useState(false)
 	const [content, setContent] = useState([])
+
+  // const admin = useRecoilValue(userState)
+  const baseUrl = localStorage.getItem("account")
+
+	if(baseUrl!=="/api/admin") return <div className="signup--container gradient" ><p> you are not authorized</p></div>
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -24,7 +33,7 @@ function AddCourse() {
 			imageLink: image,
 			published: true
 		}
-		const res = await axios.post("/api/admin/courses", body, {
+		const res = await axios.post(`${baseUrl}/courses`, body, {
 			headers: {
 				Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
 			}
@@ -34,7 +43,7 @@ function AddCourse() {
 			id: courseID,
 			chapters: content
 		}
-		await axios.post(`/api/admin/course/${courseID}/content`, contentBody, {
+		await axios.post(`/${baseUrl}/course/${courseID}/content`, contentBody, {
 			headers: {
 				Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
 			}
@@ -102,13 +111,19 @@ function AddCourse() {
 		{
 			chapter ? (
 				<div>
-					<AddChapters setContent={setContent} setChapter={setChapter}/>
+					<AddChapters setContent={setContent} setChapter={setChapter} />
 				</div>
 			) : (
-				<Button onClick={handleAddChapter}>Add Chapter</Button>
+				<Button
+					size={"large"}
+					variant="contained"
+					style={{ width: "20%", background: "black", marginTop: "20px" }}
+					onClick={handleAddChapter}>
+					Add Chapters
+				</Button>
 			)
 		}
-		<button onClick={handleTest}>testing</button>
+		{/* <button onClick={handleTest}>testing</button> */}
 	</div >
 }
 
@@ -117,40 +132,92 @@ function AddChapters({ setContent, setChapter }) {
 	const [addVideo, setAddVideo] = useState(false)
 	const [text, setText] = useState("nil")
 	const [link, setLink] = useState("nil")
+	const [name, setName] = useState("nil")
+	const [description, setDescription] = useState("nil")
 
 	const handleAddText = () => setAddText(!addText)
 	const handleAddVideo = () => setAddVideo(!addVideo)
 	const handleContent = async () => {
 		const search = '"';
-    const replaceWith = `'`;
-    const newtext = text.split(search).join(replaceWith);
-    console.log(newtext);
-    console.log(link);
+		const replaceWith = `'`;
+		const newtext = text.split(search).join(replaceWith);
+		console.log(newtext);
+		console.log(link);
+		console.log(name);
+		console.log(description);
 		setContent(oldArr => [
 			...oldArr,
 			{
+				name:name,
+				description:description,
 				html: newtext,
 				videoLink: link
 			}
 		])
-		setChapter((oldCh=>!oldCh))
+		setChapter((oldCh => !oldCh))
 	}
-  
+
 	return (
 		<div className="update--content">
-			<Button onClick={handleAddText}>add text</Button>
+			<TextField
+				style={{ marginBottom: 10 }}
+				onChange={(e) => {
+					setName(e.target.value)
+				}}
+				fullWidth={true}
+				label="Name"
+				variant="outlined"
+			/>
+			<TextField
+				style={{ marginBottom: 10 }}
+				onChange={(e) => {
+					setDescription(e.target.value)
+				}}
+				fullWidth={true}
+				label="Description"
+				variant="outlined"
+			/>
+			<Button
+				size={"large"}
+				variant="contained"
+				style={{ width: "40%", background: "black", marginBottom: 10 }}
+				onClick={handleAddText}>
+				add text
+			</Button>
 			{addText &&
-				<Textarea setText={setText}/>
+				<Textarea setText={setText} />
 			}
-			<Button onClick={handleAddVideo}>add video</Button>
+			<Button
+				size={"large"}
+				variant="contained"
+				style={{ width: "40%", background: "black", margin: 10 }}
+				onClick={handleAddVideo}>
+				add video
+			</Button>
 			{addVideo &&
-				<input type="text" onChange={(e) => setLink(e.target.value)} />
+				<TextField
+					style={{ marginBottom: 10, width: "30vw" }}
+					onChange={(e) => {
+						let link = e.target.value.split('?')[1].split('&')[0].split('=')[1]
+						setLink(link)
+					}}
+					fullWidth={true}
+					label="youtube link"
+					variant="outlined"
+				/>
+				// <input type="text" onChange={(e) => setLink(e.target.value)} />
 			}
 			{link !== "nil" &&
 				<YoutubeEmbed embedId={link} />
 			}
 			{(addText || addVideo) &&
-				<Button onClick={handleContent}>submit</Button>
+				<Button
+					size={"large"}
+					variant="contained"
+					style={{ width: "40%", background: "black" }}
+					onClick={handleContent}>
+					submit
+				</Button>
 			}
 		</div>
 	)
