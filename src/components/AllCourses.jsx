@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Panel from './Panel'
+import Cookies from 'js-cookie';
 // import {userState} from "../store/atoms/users"
 // import { useRecoilValue } from 'recoil'
 //Purchased
@@ -8,19 +9,18 @@ function AllCourses() {
   // const admin = useRecoilValue(userState)
   let baseUrl = ""
   baseUrl = localStorage.getItem("account")
-  // console.log("hi"+admin.baseUrl);
+
+  Cookies.set('username', 'john_doe', { expires: 7 });
+  const cookie = Cookies.get("username")
+  const cookie1 = Cookies.get("token")
+  // console.log(cookie,cookie1);
   // const BASE
-  console.log(baseUrl);
+  // console.log(baseUrl);
   const [courses, setCourses] = React.useState([])
 
-  const token = {
-    Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-  }
   React.useEffect(() => {
     const getallcourses = async()=>{
-      await axios.get(`${baseUrl}/courses`, {
-        headers: token
-      }).then((res) => {
+      await axios.get(`${baseUrl}/courses`).then((res) => {
         // console.log(res);
         setCourses(res.data.courses)
       })

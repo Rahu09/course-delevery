@@ -36,7 +36,6 @@ function Signup() {
     if(value==="admin"){
       axios.post("/api/admin/signup", body)
         .then((res) => {
-          localStorage.setItem('auth', JSON.stringify(res.data.token));
           localStorage.setItem('account',"/api/admin")
           setUser({
             isLoading: false,
@@ -48,7 +47,6 @@ function Signup() {
     }else if(value=== "user"){
     axios.post("/api/users/signup", body)
       .then((res) => {
-        localStorage.setItem('auth', JSON.stringify(res.data.token));
         localStorage.setItem('account',"/api/users")
         setUser({
           isLoading: false,

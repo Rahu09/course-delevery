@@ -10,17 +10,11 @@ function AllCourses() {
   baseUrl = localStorage.getItem("account")
   // console.log("hi"+admin.baseUrl);
   // const BASE
-  console.log(baseUrl);
+  // console.log(baseUrl);
   const [courses, setCourses] = React.useState([])
-
-  const token = {
-    Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-  }
   React.useEffect(() => {
     const getallcourses = async()=>{
-      await axios.get(`${baseUrl}/purchasedCourses`, {
-        headers: token
-      }).then((res) => {
+      await axios.get(`${baseUrl}/purchasedCourses`).then((res) => {
         setCourses(res.data.purchasedCourses)
       })
     }

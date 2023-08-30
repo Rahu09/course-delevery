@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -12,12 +12,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from '@mui/material/Typography';
 
+import Cookies from 'js-cookie';
+
 function ResponsiveAppBar() {
 
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [width, setWidth] = React.useState(window.innerWidth);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		window.addEventListener("resize", () => setWidth(window.innerWidth));
 		return () => window.removeEventListener("resize", () => setWidth(window.innerWidth));
 	});
@@ -27,25 +29,42 @@ function ResponsiveAppBar() {
 	const setUser = useSetRecoilState(userState);
 	const baseUrl = localStorage.getItem("account")
 
+	const handleLogout = ()=>{
+		let cookie = Cookies.get("token")
+		// console.log(cookie);
+		if(cookie===undefined) logout()
+	}
+
 	function logout() {
-		localStorage.removeItem("auth")
 		localStorage.removeItem("account")
 		setUser({
 			isLoading: false,
 			userLogin: false
 		})
 		navigate('/')
-		setTimeout(() => alert("you have been logged out"), 1000)
+		setTimeout(() => alert("you have been logged out"), 500)
 	}
+	// useEffect(()=>{
+	// 	if(userLogin) navigate('/')
+	// },[userLogin])
 
 	let show = <></>
 	if (width > 850) {
 		show = <div className='at--large'>
-			<Button size="large" onClick={() => navigate('/Courses')}>All Courses</Button>
+			<Button size="large" onClick={() => {
+				handleLogout()
+				navigate('/Courses')
+				}}>All Courses</Button>
 			{
 				baseUrl === "/api/admin" ? 
-				<Button size="large" onClick={() => navigate('/addcourse')}>Add Course</Button> :
-				<Button size="large" onClick={() => navigate('/courses/purchased')}>PURCHASED</Button>
+				<Button size="large" onClick={() => {
+					navigate('/addcourse')
+					handleLogout()
+				}}>Add Course</Button> :
+				<Button size="large" onClick={() => {
+					navigate('/courses/purchased')
+					handleLogout()
+				}}>PURCHASED</Button>
 			}
 			
 			<Button size="large" onClick={logout}>Logout</Button>
@@ -55,7 +74,7 @@ function ResponsiveAppBar() {
 			setAnchorElNav(event.currentTarget);
 		};
 		const handleCloseNavMenu = (event, key) => {
-			console.log(key);
+			// console.log(key);
 			setAnchorElNav(null);
 		};
 		show = <div className='at--small'>
@@ -91,6 +110,7 @@ function ResponsiveAppBar() {
 					<MenuItem onClick={() => {
 						setAnchorElNav(null);
 						navigate('/Courses')
+						handleLogout()
 					}}>
 						<Typography textAlign="center">Courses</Typography>
 					</MenuItem>
@@ -98,6 +118,7 @@ function ResponsiveAppBar() {
 						(<MenuItem onClick={() => {
 							navigate('/addcourse')
 							setAnchorElNav(null);
+							handleLogout()
 						}}>
 							<Typography textAlign="center">Add course</Typography>
 						</MenuItem>)
@@ -105,6 +126,7 @@ function ResponsiveAppBar() {
 						(<MenuItem onClick={() => {
 							navigate('/courses/purchased')
 							setAnchorElNav(null);
+							handleLogout()
 						}}>
 							<Typography textAlign="center">purchased</Typography>
 						</MenuItem>)

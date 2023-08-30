@@ -22,7 +22,6 @@ function AddCourse() {
   // const admin = useRecoilValue(userState)
   const baseUrl = localStorage.getItem("account")
 
-	if(baseUrl!=="/api/admin") return <div className="signup--container gradient" ><p> you are not authorized</p></div>
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -33,29 +32,23 @@ function AddCourse() {
 			imageLink: image,
 			published: true
 		}
-		const res = await axios.post(`${baseUrl}/courses`, body, {
-			headers: {
-				Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-			}
-		});
+		const res = await axios.post(`${baseUrl}/courses`, body);
 		const courseID = res.data.courseId;
 		const contentBody = {
 			id: courseID,
 			chapters: content
 		}
-		await axios.post(`/${baseUrl}/course/${courseID}/content`, contentBody, {
-			headers: {
-				Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-			}
-		});
+		await axios.post(`/${baseUrl}/course/${courseID}/content`, contentBody);
 		alert("Added course!");
 	}
 	const handleAddChapter = () => {
 		setChapter(!chapter);
 	}
-	const handleTest = () => {
-		console.log(content);
-	}
+	// const handleTest = () => {
+	// 	console.log(content);
+	// }
+
+	if(baseUrl!=="/api/admin") return <div className="signup--container gradient" ><p> you are not authorized</p></div>
 
 	return <div className="signup--container gradient" style={{ height: "100%", minHeight: "83vh" }}>
 		<div style={{ display: "flex", justifyContent: "center" }}>
@@ -141,10 +134,10 @@ function AddChapters({ setContent, setChapter }) {
 		const search = '"';
 		const replaceWith = `'`;
 		const newtext = text.split(search).join(replaceWith);
-		console.log(newtext);
-		console.log(link);
-		console.log(name);
-		console.log(description);
+		// console.log(newtext);
+		// console.log(link);
+		// console.log(name);
+		// console.log(description);
 		setContent(oldArr => [
 			...oldArr,
 			{

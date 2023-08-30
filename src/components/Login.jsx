@@ -36,7 +36,6 @@ function Login() {
       axios.post("/api/admin/login", {}, {
         headers: user
       }).then((res) => {
-        localStorage.setItem('auth', JSON.stringify(res.data.token));
         localStorage.setItem('account',"/api/admin")
         setUser({
           isLoading: false,
@@ -44,12 +43,11 @@ function Login() {
         })
         navigate('/')
       })
-      console.log("admin");
+      // console.log("admin");
     }else if(value ==="user"){
       axios.post("/api/users/login", {}, {
         headers: user
       }).then((res) => {
-        localStorage.setItem('auth', JSON.stringify(res.data.token));
         localStorage.setItem('account',"/api/users")
         setUser({
           isLoading: false,
@@ -57,7 +55,7 @@ function Login() {
         })
         navigate('/')
       })
-      console.log("user");
+      // console.log("user");
     }else{
       alert("Select any one role USER or ADMIN")
     }

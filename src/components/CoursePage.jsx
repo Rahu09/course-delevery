@@ -7,6 +7,7 @@ import { courseState } from "../store/atoms/course";
 import { contentState } from "../store/atoms/content"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { coursePrice, isCourseLoading, courseImage, courseTitle, courseDescription } from "../store/selectors/course";
+import Cookies from 'js-cookie';
 
 // import {userState} from "../store/atoms/users"
 
@@ -28,6 +29,7 @@ function CoursePage() {
 
   // const admin = useRecoilValue(userState)
   const baseUrl = localStorage.getItem("account")
+  Cookies.remove('username');
 
 
   // const [course, setCourse] = useRecoilState(courseState)
@@ -37,13 +39,8 @@ function CoursePage() {
 
 
   useEffect(() => {
-    axios.get(`${baseUrl}/course/${id}`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-      }
-    }).then(res => {
-      console.log("success course");
+    axios.get(`${baseUrl}/course/${id}`).then(res => {
+      // console.log("success course");
       setCourse({ isLoading: false, course: res.data.course });
 
     }).catch(e => {
@@ -51,13 +48,8 @@ function CoursePage() {
       setCourse({ isLoading: false, course: null });
     });
 
-    axios.get(`${baseUrl}/course/${id}/content`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-      }
-    }).then(res => {
-      console.log("success content");
+    axios.get(`${baseUrl}/course/${id}/content`).then(res => {
+      // console.log("success content");
       setContent({ isLoading: true, content: res.data });
 
     }).catch(e => {
@@ -66,13 +58,8 @@ function CoursePage() {
     });
 
     if (baseUrl === '/api/users') {
-      axios.get(`${baseUrl}/purchasedCourses`, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-        }
-      }).then(res => {
-        console.log("success content");
+      axios.get(`${baseUrl}/purchasedCourses`).then(res => {
+        // console.log("success content");
         setPurchased(res.data.purchasedCourses.map(ele => ele._id))
 
       }).catch(e => {
@@ -98,11 +85,7 @@ function CoursePage() {
     if (baseUrl==="/api/admin") { navigate(`/course/${id}`) }
     else if(bought === true){ navigate(`/course/${id}`) }
     else {
-      axios.post(`${baseUrl}/courses/${id}`, {}, {
-        headers: {
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-        }
-      }).then((res) => {
+      axios.post(`${baseUrl}/courses/${id}`).then((res) => {
         setBought(true)
         alert("COURSE PURCHESED")
       })

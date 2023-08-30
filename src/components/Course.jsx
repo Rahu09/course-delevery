@@ -21,37 +21,31 @@ function Course() {
   
   // const admin = useRecoilValue(userState)
   const baseUrl = localStorage.getItem("account")
-
-  const token = {
-    Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-  }
   useEffect(()=>{
     const allChapters = async()=>{
-      const res = await axios.get(`${baseUrl}/course/${id}/content`,{
-        headers:token
-      })
+      const res = await axios.get(`${baseUrl}/course/${id}/content`)
       setContent(res.data.chapters)
     }
     allChapters()
   },[])
 
   useEffect(()=>{
-    console.log('curr');
+    // console.log('curr');
     setShow(content[0])
     setInd(0)
   },[content])
 
-  console.log(show);
+  // console.log(show);
   const handleprev = () => {
     if (ind !== 0) {
-      console.log('prev');
+      // console.log('prev');
       setShow(content[ind - 1])
       setInd(ind - 1)
     }
   }
   const handlenext = () => {
     if (ind !== content.length - 1) {
-      console.log('next');
+      // console.log('next');
       setShow(content[ind + 1])
       setInd(ind + 1)
     }

@@ -31,12 +31,7 @@ function UpdateCourse() {
   if(baseUrl!=="/api/admin") return <div className="signup--container gradient" ><p> you are not authorized</p></div>
 
   useEffect(() => {
-    axios.get(`${baseUrl}/course/${id}`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + JSON.parse(localStorage.getItem("auth"))
-      }
-    }).then(res => {
+    axios.get(`${baseUrl}/course/${id}`).then(res => {
       setCourse({ isLoading: false, course: res.data.course });
     })
       .catch(e => {
@@ -54,10 +49,10 @@ function UpdateCourse() {
     const search = '"';
     const replaceWith = `'`;
     const newtext = text.split(search).join(replaceWith);
-    console.log(newtext);
-    console.log(link);
-    console.log(name);
-    console.log(description);
+    // console.log(newtext);
+    // console.log(link);
+    // console.log(name);
+    // console.log(description);
     try {
       const res = await axios.put(`${baseUrl}/course/${id}/content`, {
         name: name,
@@ -67,8 +62,7 @@ function UpdateCourse() {
       }, {
         method: "PUT",
         headers: {
-          "Content-type": "application/json",
-          "Authorization": "Bearer " + JSON.parse(localStorage.getItem("auth"))
+          "Content-type": "application/json"
         }
       })
       alert("updated sucessfully")
@@ -330,8 +324,7 @@ function UpdateCard() {
               price
             }, {
               headers: {
-                "Content-type": "application/json",
-                "Authorization": "Bearer " + JSON.parse(localStorage.getItem("auth"))
+                "Content-type": "application/json"
               }
             });
             let updatedCourse = {
