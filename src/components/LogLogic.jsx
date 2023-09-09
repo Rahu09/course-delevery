@@ -1,33 +1,31 @@
-import React, {useEffect} from 'react'
-import {userState} from '../store/atoms/users'
-import { useSetRecoilState } from 'recoil';
-import Cookies from 'js-cookie';
-
+import { useEffect } from "react";
+import { userState } from "../store/atoms/users";
+import { useSetRecoilState } from "recoil";
+import Cookies from "js-cookie";
 
 function LogLogic() {
-
   const setUser = useSetRecoilState(userState);
-  const auth = async()=>{
-    const res = Cookies.get("token")
-    
-    if(res){
+  const auth = async () => {
+    const res = Cookies.get("token");
+
+    if (res) {
       setUser({
         isLoading: false,
-        userLogin: true
-      })
-    }else{
+        userLogin: true,
+      });
+    } else {
       setUser({
         isLoading: false,
-        userLogin: false
-      })
+        userLogin: false,
+      });
     }
-  }
+  };
 
   useEffect(() => {
     auth();
   }, []);
 
-  return <div></div>
+  return <div></div>;
 }
 
-export default LogLogic
+export default LogLogic;
