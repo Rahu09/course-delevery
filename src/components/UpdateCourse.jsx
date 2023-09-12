@@ -17,6 +17,7 @@ import {
 
 import YoutubeEmbed from "./YoutubeEmbed";
 import { Editor } from "@tinymce/tinymce-react";
+import BasicAccordion from "./Accordion";
 
 // import {userState} from "../store/atoms/users"
 
@@ -99,6 +100,21 @@ function UpdateCourse() {
         </Grid>
         <Grid item lg={4} md={12} sm={12}>
           <CourseCard />
+        </Grid>
+        <Grid
+          item
+          lg={12}
+          md={12}
+          sm={12}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <BasicAccordion />
+          </div>
         </Grid>
         <Grid
           item
@@ -246,7 +262,6 @@ function Textarea({ setText }) {
             " help",
             " wordcount",
             "save",
-            // 'paste', ' print ', 'hr', ' noneditable', ' textpattern', '  toc', 'imagetools'
           ],
           menubar: "file edit view insert format tools table help",
           toolbar:

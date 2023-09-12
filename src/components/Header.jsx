@@ -52,15 +52,6 @@ function ResponsiveAppBar() {
   if (width > 850) {
     show = (
       <div className="at--large">
-        <Button
-          size="large"
-          onClick={() => {
-            handleLogout();
-            navigate("/Courses");
-          }}
-        >
-          All Courses
-        </Button>
         {baseUrl === "/api/admin" ? (
           <Button
             size="large"
@@ -171,13 +162,16 @@ function ResponsiveAppBar() {
       <div className="navbar-container">
         <div className="navbar">
           <div className="navrighit">
-            <Button size="large" onClick={() => navigate("/")}>
-              Course \\_// delevery
+            <Button
+              size={width > 850 ? "large" : "small"}
+              onClick={() => navigate("/")}
+            >
+              {width > 850 ? "Course \\\\_// delevery" : "C \\\\_// D"}
             </Button>
           </div>
           <div className="navleft">
             <Button
-              size="large"
+              size={width > 850 ? "large" : "small"}
               onClick={() => {
                 navigate("/Courses");
               }}
@@ -188,7 +182,10 @@ function ResponsiveAppBar() {
               show
             ) : (
               <div>
-                <Button size="large" onClick={() => navigate("/login")}>
+                <Button
+                  size={width > 850 ? "large" : "small"}
+                  onClick={() => navigate("/login")}
+                >
                   Login / Signup
                 </Button>
               </div>

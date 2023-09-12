@@ -15,8 +15,8 @@ function Panel(Props) {
       navigate(`/CoursePage/${_id}`);
     } else {
       navigate(`/login`);
+      alert("login to view the courses");
     }
-    alert("login to view the courses");
   };
   return (
     <div className="card">

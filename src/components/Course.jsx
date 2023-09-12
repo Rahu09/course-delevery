@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import YoutubeEmbed from "./YoutubeEmbed";
 import parse from "html-react-parser";
-
 // import {userState} from "../store/atoms/users"
 // import { useRecoilValue } from 'recoil'
 
@@ -19,6 +18,15 @@ function Course() {
     _id: "",
   });
 
+  const scrollContainerRef = useRef(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+    }
+  }, [show]);
+
   // const admin = useRecoilValue(userState)
   const baseUrl = localStorage.getItem("account");
   useEffect(() => {
@@ -27,7 +35,7 @@ function Course() {
       setContent(res.data.chapters);
     };
     allChapters();
-  }, []);
+  }, [baseUrl, id]);
 
   useEffect(() => {
     // console.log('curr');
@@ -80,7 +88,13 @@ function Course() {
           ))}
         </div>
         <div className="course--container">
-          <div className="text--container">{show && parse(show.html)}</div>
+          <div
+            className="text--container"
+            ref={scrollContainerRef}
+            id="style-2"
+          >
+            {show && parse(show.html)}
+          </div>
           <div className="video--container">
             {show && <YoutubeEmbed embedId={show.videoLink} />}
           </div>

@@ -38,7 +38,7 @@ function AddCourse() {
       id: courseID,
       chapters: content,
     };
-    await axios.post(`/${baseUrl}/course/${courseID}/content`, contentBody);
+    await axios.post(`${baseUrl}/course/${courseID}/content`, contentBody);
     alert("Added course!");
   };
   const handleAddChapter = () => {
